@@ -1,9 +1,10 @@
 module github.com/timo972/go-jose/v4
 
-go 1.24
+go 1.21
 
 require (
 	github.com/stretchr/testify v1.10.0
+	golang.org/x/crypto v0.32.0
 )
 
 require (
