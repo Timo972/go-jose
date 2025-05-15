@@ -1,4 +1,4 @@
-module github.com/go-jose/go-jose/v4
+module github.com/timo972/go-jose/v4
 
 go 1.24
 

@@ -23,7 +23,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/go-jose/go-jose/v4/json"
+	"github.com/timo972/go-jose/v4/json"
 )
 
 // rawJSONWebSignature represents a raw JWS JSON object. Used for parsing/serializing.
@@ -130,7 +130,7 @@ func ParseDetached(
 	signatureAlgorithms []SignatureAlgorithm,
 ) (*JSONWebSignature, error) {
 	if payload == nil {
-		return nil, errors.New("go-jose/go-jose: nil payload")
+		return nil, errors.New("timo972/go-jose: nil payload")
 	}
 	return parseSignedCompact(stripWhitespace(signature), payload, signatureAlgorithms)
 }
@@ -226,10 +226,10 @@ func newErrUnexpectedSignatureAlgorithm(got SignatureAlgorithm, expected []Signa
 // sanitized produces a cleaned-up JWS object from the raw JSON.
 func (parsed *rawJSONWebSignature) sanitized(signatureAlgorithms []SignatureAlgorithm) (*JSONWebSignature, error) {
 	if len(signatureAlgorithms) == 0 {
-		return nil, errors.New("go-jose/go-jose: no signature algorithms specified")
+		return nil, errors.New("timo972/go-jose: no signature algorithms specified")
 	}
 	if parsed.Payload == nil {
-		return nil, fmt.Errorf("go-jose/go-jose: missing payload in JWS message")
+		return nil, fmt.Errorf("timo972/go-jose: missing payload in JWS message")
 	}
 
 	obj := &JSONWebSignature{
@@ -298,7 +298,7 @@ func (parsed *rawJSONWebSignature) sanitized(signatureAlgorithms []SignatureAlgo
 		// As per RFC 7515 Section 4.1.3, only public keys are allowed to be embedded.
 		jwk := signature.Header.JSONWebKey
 		if jwk != nil && (!jwk.Valid() || !jwk.IsPublic()) {
-			return nil, errors.New("go-jose/go-jose: invalid embedded jwk, must be public key")
+			return nil, errors.New("timo972/go-jose: invalid embedded jwk, must be public key")
 		}
 
 		obj.Signatures = append(obj.Signatures, signature)
@@ -348,7 +348,7 @@ func (parsed *rawJSONWebSignature) sanitized(signatureAlgorithms []SignatureAlgo
 		// As per RFC 7515 Section 4.1.3, only public keys are allowed to be embedded.
 		jwk := obj.Signatures[i].Header.JSONWebKey
 		if jwk != nil && (!jwk.Valid() || !jwk.IsPublic()) {
-			return nil, errors.New("go-jose/go-jose: invalid embedded jwk, must be public key")
+			return nil, errors.New("timo972/go-jose: invalid embedded jwk, must be public key")
 		}
 
 		// Copy value of sig
@@ -371,18 +371,18 @@ func parseSignedCompact(
 ) (*JSONWebSignature, error) {
 	protected, s, ok := strings.Cut(input, tokenDelim)
 	if !ok { // no period found
-		return nil, fmt.Errorf("go-jose/go-jose: compact JWS format must have three parts")
+		return nil, fmt.Errorf("timo972/go-jose: compact JWS format must have three parts")
 	}
 	claims, sig, ok := strings.Cut(s, tokenDelim)
 	if !ok { // only one period found
-		return nil, fmt.Errorf("go-jose/go-jose: compact JWS format must have three parts")
+		return nil, fmt.Errorf("timo972/go-jose: compact JWS format must have three parts")
 	}
 	if strings.ContainsRune(sig, '.') { // too many periods found
-		return nil, fmt.Errorf("go-jose/go-jose: compact JWS format must have three parts")
+		return nil, fmt.Errorf("timo972/go-jose: compact JWS format must have three parts")
 	}
 
 	if claims != "" && payload != nil {
-		return nil, fmt.Errorf("go-jose/go-jose: payload is not detached")
+		return nil, fmt.Errorf("timo972/go-jose: payload is not detached")
 	}
 
 	rawProtected, err := base64.RawURLEncoding.DecodeString(protected)

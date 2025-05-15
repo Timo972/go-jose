@@ -28,7 +28,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/go-jose/go-jose/v4/json"
+	"github.com/timo972/go-jose/v4/json"
 )
 
 type staticNonceSource string

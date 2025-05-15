@@ -22,7 +22,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/go-jose/go-jose/v4/json"
+	"github.com/timo972/go-jose/v4/json"
 )
 
 // rawJSONWebEncryption represents a raw JWE JSON object. Used for parsing/serializing.
@@ -168,10 +168,10 @@ func (parsed *rawJSONWebEncryption) sanitized(
 	contentEncryption []ContentEncryption,
 ) (*JSONWebEncryption, error) {
 	if len(keyEncryptionAlgorithms) == 0 {
-		return nil, errors.New("go-jose/go-jose: no key algorithms provided")
+		return nil, errors.New("timo972/go-jose: no key algorithms provided")
 	}
 	if len(contentEncryption) == 0 {
-		return nil, errors.New("go-jose/go-jose: no content encryption algorithms provided")
+		return nil, errors.New("timo972/go-jose: no content encryption algorithms provided")
 	}
 
 	obj := &JSONWebEncryption{
@@ -194,7 +194,7 @@ func (parsed *rawJSONWebEncryption) sanitized(
 	if parsed.Protected != nil && len(parsed.Protected.bytes()) > 0 {
 		err := json.Unmarshal(parsed.Protected.bytes(), &obj.protected)
 		if err != nil {
-			return nil, fmt.Errorf("go-jose/go-jose: invalid protected header: %s, %s", err, parsed.Protected.base64())
+			return nil, fmt.Errorf("timo972/go-jose: invalid protected header: %s, %s", err, parsed.Protected.base64())
 		}
 	}
 
@@ -204,7 +204,7 @@ func (parsed *rawJSONWebEncryption) sanitized(
 	mergedHeaders := obj.mergedHeaders(nil)
 	obj.Header, err = mergedHeaders.sanitized()
 	if err != nil {
-		return nil, fmt.Errorf("go-jose/go-jose: cannot sanitize merged headers: %v (%v)", err, mergedHeaders)
+		return nil, fmt.Errorf("timo972/go-jose: cannot sanitize merged headers: %v (%v)", err, mergedHeaders)
 	}
 
 	if len(parsed.Recipients) == 0 {
@@ -235,14 +235,14 @@ func (parsed *rawJSONWebEncryption) sanitized(
 	for i, recipient := range obj.recipients {
 		headers := obj.mergedHeaders(&recipient)
 		if headers.getAlgorithm() == "" {
-			return nil, fmt.Errorf(`go-jose/go-jose: recipient %d: missing header "alg"`, i)
+			return nil, fmt.Errorf(`timo972/go-jose: recipient %d: missing header "alg"`, i)
 		}
 		if headers.getEncryption() == "" {
-			return nil, fmt.Errorf(`go-jose/go-jose: recipient %d: missing header "enc"`, i)
+			return nil, fmt.Errorf(`timo972/go-jose: recipient %d: missing header "enc"`, i)
 		}
 		err := validateAlgEnc(headers, keyEncryptionAlgorithms, contentEncryption)
 		if err != nil {
-			return nil, fmt.Errorf("go-jose/go-jose: recipient %d: %s", i, err)
+			return nil, fmt.Errorf("timo972/go-jose: recipient %d: %s", i, err)
 		}
 
 	}
@@ -250,13 +250,13 @@ func (parsed *rawJSONWebEncryption) sanitized(
 	if obj.protected != nil {
 		err := validateAlgEnc(*obj.protected, keyEncryptionAlgorithms, contentEncryption)
 		if err != nil {
-			return nil, fmt.Errorf("go-jose/go-jose: protected header: %s", err)
+			return nil, fmt.Errorf("timo972/go-jose: protected header: %s", err)
 		}
 	}
 	if obj.unprotected != nil {
 		err := validateAlgEnc(*obj.unprotected, keyEncryptionAlgorithms, contentEncryption)
 		if err != nil {
-			return nil, fmt.Errorf("go-jose/go-jose: unprotected header: %s", err)
+			return nil, fmt.Errorf("timo972/go-jose: unprotected header: %s", err)
 		}
 	}
 
@@ -294,12 +294,12 @@ func ParseEncryptedCompact(
 	for i := range 4 {
 		parts[i], input, ok = strings.Cut(input, ".")
 		if !ok {
-			return nil, errors.New("go-jose/go-jose: compact JWE format must have five parts")
+			return nil, errors.New("timo972/go-jose: compact JWE format must have five parts")
 		}
 	}
 	// Validate that the last part does not contain more dots
 	if strings.ContainsRune(input, '.') {
-		return nil, errors.New("go-jose/go-jose: compact JWE format must have five parts")
+		return nil, errors.New("timo972/go-jose: compact JWE format must have five parts")
 	}
 	parts[4] = input
 

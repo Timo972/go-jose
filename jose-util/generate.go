@@ -22,8 +22,8 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/go-jose/go-jose/v4"
-	"github.com/go-jose/go-jose/v4/jose-util/generator"
+	"github.com/timo972/go-jose/v4"
+	"github.com/timo972/go-jose/v4/jose-util/generator"
 )
 
 func generate(args []string) error {

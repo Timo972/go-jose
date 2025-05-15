@@ -23,7 +23,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/go-jose/go-jose/v4/json"
+	"github.com/timo972/go-jose/v4/json"
 )
 
 // KeyAlgorithm represents a key management algorithm.
@@ -45,38 +45,38 @@ var (
 	// ErrCryptoFailure represents an error in cryptographic primitive. This
 	// occurs when, for example, a message had an invalid authentication tag or
 	// could not be decrypted.
-	ErrCryptoFailure = errors.New("go-jose/go-jose: error in cryptographic primitive")
+	ErrCryptoFailure = errors.New("timo972/go-jose: error in cryptographic primitive")
 
 	// ErrUnsupportedAlgorithm indicates that a selected algorithm is not
 	// supported. This occurs when trying to instantiate an encrypter for an
 	// algorithm that is not yet implemented.
-	ErrUnsupportedAlgorithm = errors.New("go-jose/go-jose: unknown/unsupported algorithm")
+	ErrUnsupportedAlgorithm = errors.New("timo972/go-jose: unknown/unsupported algorithm")
 
 	// ErrUnsupportedKeyType indicates that the given key type/format is not
 	// supported. This occurs when trying to instantiate an encrypter and passing
 	// it a key of an unrecognized type or with unsupported parameters, such as
 	// an RSA private key with more than two primes.
-	ErrUnsupportedKeyType = errors.New("go-jose/go-jose: unsupported key type/format")
+	ErrUnsupportedKeyType = errors.New("timo972/go-jose: unsupported key type/format")
 
 	// ErrInvalidKeySize indicates that the given key is not the correct size
 	// for the selected algorithm. This can occur, for example, when trying to
 	// encrypt with AES-256 but passing only a 128-bit key as input.
-	ErrInvalidKeySize = errors.New("go-jose/go-jose: invalid key size for algorithm")
+	ErrInvalidKeySize = errors.New("timo972/go-jose: invalid key size for algorithm")
 
 	// ErrNotSupported serialization of object is not supported. This occurs when
 	// trying to compact-serialize an object which can't be represented in
 	// compact form.
-	ErrNotSupported = errors.New("go-jose/go-jose: compact serialization not supported for object")
+	ErrNotSupported = errors.New("timo972/go-jose: compact serialization not supported for object")
 
 	// ErrUnprotectedNonce indicates that while parsing a JWS or JWE object, a
 	// nonce header parameter was included in an unprotected header object.
-	ErrUnprotectedNonce = errors.New("go-jose/go-jose: Nonce parameter included in unprotected header")
+	ErrUnprotectedNonce = errors.New("timo972/go-jose: Nonce parameter included in unprotected header")
 
 	// ErrMissingX5cHeader indicates that the JWT header is missing x5c headers.
-	ErrMissingX5cHeader = errors.New("go-jose/go-jose: no x5c header present in message")
+	ErrMissingX5cHeader = errors.New("timo972/go-jose: no x5c header present in message")
 
 	// ErrUnsupportedEllipticCurve indicates unsupported or unknown elliptic curve has been found.
-	ErrUnsupportedEllipticCurve = errors.New("go-jose/go-jose: unsupported/unknown elliptic curve")
+	ErrUnsupportedEllipticCurve = errors.New("timo972/go-jose: unsupported/unknown elliptic curve")
 )
 
 // Key management algorithms
