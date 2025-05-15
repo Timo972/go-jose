@@ -23,6 +23,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"io"
+	"math"
 	"math/big"
 	"strings"
 	"unicode"
@@ -106,7 +107,7 @@ func inflate(input []byte) ([]byte, error) {
 	output := new(bytes.Buffer)
 	reader := flate.NewReader(bytes.NewBuffer(input))
 
-	maxCompressedSize := max(250_000, 10*int64(len(input)))
+	maxCompressedSize := int64(math.Max(250_000, float64(10*int64(len(input)))))
 
 	limit := maxCompressedSize + 1
 	n, err := io.CopyN(output, reader, limit)
